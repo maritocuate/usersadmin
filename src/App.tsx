@@ -8,7 +8,7 @@ import './App.css'
 
 function App() {
   const [users, setUsers] = useState<User[]>([])
-  const [bgColor, setBgColor] = useState<Boolean>(false)
+  const [bgColor, setBgColor] = useState<boolean>(false)
   
   useEffect(() => {
     fetch('https://randomuser.me/api?results=10')
