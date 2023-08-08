@@ -1,5 +1,7 @@
 # UsersAdmin Challenge (React + TypeScript + Vite)
 
+![Alt text](./public/example.png?raw=true "Example")
+
 The objective of this technical test is to create a similar application to the one provided in this link: https://xxxxx. To achieve this, you must use the API provided by https://randomuser.me/
 
 Here are the steps to follow:
