@@ -6,7 +6,7 @@ interface Props {
 
 const UsersList = ({ users }: Props) => {
   return (
-    <table>
+    <table width='100%'>
         <thead>
             <tr>
                 <th>Photo</th>
@@ -20,7 +20,7 @@ const UsersList = ({ users }: Props) => {
         <tbody>
             {
                 users.map(user => (
-                    <tr key={user.id.name}>
+                    <tr key={user.login.uuid}>
                        <td>
                         <img src={user.picture.thumbnail} alt={user.name.title} />
                        </td> 
