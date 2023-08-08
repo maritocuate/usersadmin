@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { type User } from './types'
 
-import './App.css'
 import UsersList from './components/UsersList'
+import ButtonBar from './components/ButtonsBar'
+
+import './App.css'
 
 function App() {
   const [users, setUsers] = useState<User[]>([])
+  const [bgColor, setBgColor] = useState<Boolean>(false)
   
   useEffect(() => {
     fetch('https://randomuser.me/api?results=10')
@@ -18,11 +21,18 @@ function App() {
     })
   }, [])
 
+  const toggleBgColor = () => {
+    setBgColor(!bgColor)
+  }
+
   return (
     <>
       <h1>App</h1>
       <div className='container'>
-        <UsersList users={users} />
+        <ButtonBar
+          toggleBgColor={toggleBgColor}
+        />
+        <UsersList users={users} bgColor={bgColor} />
       </div>
     </>
   )
