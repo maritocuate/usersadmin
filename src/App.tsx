@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { type User } from './types'
 
 import './App.css'
 
 function App() {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<User[]>([])
   
   useEffect(() => {
     fetch('https://randomuser.me/api?results=10')
