@@ -36,6 +36,11 @@ function App() {
     })
     : users
 
+  const handleDelete = (uuid:string) => {
+    const filteredUsers = users.filter(user => user.login.uuid !== uuid)
+    setUsers(filteredUsers)
+  }
+
   return (
     <>
       <h1>App</h1>
@@ -44,7 +49,11 @@ function App() {
           toggleBgColor={toggleBgColor}
           toggleOrderByCountry={toggleOrderByCountry}
         />
-        <UsersList users={sortedUsers} bgColor={bgColor} />
+        <UsersList
+          users={sortedUsers}
+          bgColor={bgColor}
+          handleDelete={handleDelete}
+        />
       </div>
     </>
   )
