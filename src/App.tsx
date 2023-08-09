@@ -11,6 +11,7 @@ function App() {
   const [users, setUsers] = useState<User[]>([])
   const [bgColor, setBgColor] = useState<boolean>(false)
   const [orderByCountry, setOrderByCountry] = useState<boolean>(false)
+  const [filterCountry, setFilterCountry] = useState<string>('')
   
   useEffect(() => {
     fetch('https://randomuser.me/api?results=10')
@@ -32,12 +33,6 @@ function App() {
     setOrderByCountry(orderByCountry => !orderByCountry)
   }
 
-  const sortedUsers = orderByCountry
-    ? [...users].sort((a, b) => {
-      return a.location.country.localeCompare(b.location.country)
-    })
-    : users
-
   const handleDelete = (uuid:string) => {
     const filteredUsers = users.filter(user => user.login.uuid !== uuid)
     setUsers(filteredUsers)
@@ -47,6 +42,19 @@ function App() {
     setUsers(originalUsers.current)
   }
 
+  const filteredUsers = filterCountry 
+    ? users.filter(user => {
+      return user.location.country.toLowerCase().includes(filterCountry.toLocaleLowerCase())
+    })
+    : users
+  
+
+  const sortedUsers = orderByCountry
+    ? [...filteredUsers].sort((a, b) => {
+      return a.location.country.localeCompare(b.location.country)
+    })
+    : filteredUsers
+
   return (
     <>
       <h1>App</h1>
@@ -55,6 +63,7 @@ function App() {
           toggleBgColor={toggleBgColor}
           toggleOrderByCountry={toggleOrderByCountry}
           handleReset={handleReset}
+          setFilterCountry={setFilterCountry}
         />
         <UsersList
           users={sortedUsers}
