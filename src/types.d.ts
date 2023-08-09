@@ -86,3 +86,10 @@ export interface Picture {
     medium:    string;
     thumbnail: string;
 }
+
+export enum SortBy {
+    EMPTY = 'empty',
+    FIRST = 'first',
+    LAST = 'last',
+    COUNTRY = 'country'
+}

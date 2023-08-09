@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
-import { type User } from './types'
+import { SortBy, type User } from './types.d'
 
 import UsersList from './components/UsersList'
 import ButtonBar from './components/ButtonsBar'
@@ -10,7 +10,7 @@ function App() {
   const originalUsers = useRef<User[]>([])
   const [users, setUsers] = useState<User[]>([])
   const [bgColor, setBgColor] = useState<boolean>(false)
-  const [orderByCountry, setOrderByCountry] = useState<boolean>(false)
+  const [orderBy, setOrderBy] = useState<SortBy>(SortBy.EMPTY)
   const [filterCountry, setFilterCountry] = useState<string>('')
   
   useEffect(() => {
@@ -30,7 +30,8 @@ function App() {
   }
 
   const toggleOrderByCountry = () => {
-    setOrderByCountry(orderByCountry => !orderByCountry)
+    const orderValue = orderBy===SortBy.EMPTY ? SortBy.COUNTRY : SortBy.EMPTY
+    setOrderBy(orderValue)
   }
 
   const handleDelete = (uuid:string) => {
@@ -42,6 +43,10 @@ function App() {
     setUsers(originalUsers.current)
   }
 
+  const handleChangeOrder = (type:SortBy) => {
+    setOrderBy(type)
+  }
+
   const filteredUsers = useMemo(() => {
     return filterCountry
       ? users.filter(user => {
@@ -51,12 +56,25 @@ function App() {
   }, [users, filterCountry])
 
   const sortedUsers = useMemo(() => {
-    return orderByCountry
+    if(orderBy===SortBy.EMPTY) return filteredUsers
+
+    const compareProperties: Record<string, (user:User) => any> = {
+      [SortBy.FIRST]: user => user.name.first,
+      [SortBy.LAST]: user => user.name.last,
+      [SortBy.COUNTRY]: user => user.location.country,
+    }
+    return [...filteredUsers].sort((a, b) => {
+      const extractProperty = compareProperties[orderBy]
+      return extractProperty(a).localeCompare(extractProperty(b))
+    })
+    /* 
+    return orderBy!==SortBy.EMPTY
       ? [...filteredUsers].sort((a, b) => {
         return a.location.country.localeCompare(b.location.country)
       })
       : filteredUsers
-  }, [filteredUsers, orderByCountry])
+    */
+  }, [filteredUsers, orderBy])
 
   return (
     <>
@@ -72,6 +90,7 @@ function App() {
           users={sortedUsers}
           bgColor={bgColor}
           handleDelete={handleDelete}
+          handleChangeOrder={handleChangeOrder}
         />
       </div>
     </>

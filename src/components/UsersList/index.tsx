@@ -1,20 +1,30 @@
-import { User } from "../../types"
+import { SortBy, User } from "../../types.d"
 
 interface Props {
     users: User[]
     bgColor: boolean
     handleDelete: (uuid:string) => void
+    handleChangeOrder: (type:SortBy) => void
 }
 
-const UsersList = ({ users, bgColor, handleDelete }: Props) => {
+const UsersList = ({ users, bgColor, handleDelete, handleChangeOrder }: Props) => {
   return (
     <table width='100%'>
         <thead>
             <tr>
                 <th>Photo</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Country</th>
+                <th
+                    className="set-order"
+                    onClick={() => handleChangeOrder(SortBy.FIRST)}
+                >First Name</th>
+                <th
+                    className="set-order"
+                    onClick={() => handleChangeOrder(SortBy.LAST)}
+                >Last Name</th>
+                <th
+                    className="set-order"
+                    onClick={() => handleChangeOrder(SortBy.COUNTRY)}
+                >Country</th>
                 <th>Actions</th>
             </tr>
         </thead>
