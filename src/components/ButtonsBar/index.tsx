@@ -7,7 +7,7 @@ interface Props {
 
 const ButtonBar = ({ toggleBgColor, toggleOrderByCountry, handleReset, setFilterCountry }: Props) => {
   return (
-    <div style={{ marginBottom:'2rem' }}>
+    <div className="buttons-bar" style={{ marginBottom:'2rem' }}>
         <button
             onClick={toggleBgColor}
         >Color Rows</button>

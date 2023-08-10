@@ -14,12 +14,12 @@ function App() {
   const [filterCountry, setFilterCountry] = useState<string>('')
   
   useEffect(() => {
-    fetch('https://randomuser.me/api?results=10')
-    .then(response => response.json())
-    .then(response => {
-      setUsers(response.results)
-      originalUsers.current = response.results
-    })
+    fetch('https://randomuser.me/api?results=100')
+      .then(response => response.json())
+      .then(response => {
+        setUsers(response.results)
+        originalUsers.current = response.results
+      })
     .catch(error => {
       console.error(error)
     })
@@ -67,18 +67,11 @@ function App() {
       const extractProperty = compareProperties[orderBy]
       return extractProperty(a).localeCompare(extractProperty(b))
     })
-    /* 
-    return orderBy!==SortBy.EMPTY
-      ? [...filteredUsers].sort((a, b) => {
-        return a.location.country.localeCompare(b.location.country)
-      })
-      : filteredUsers
-    */
   }, [filteredUsers, orderBy])
 
   return (
     <>
-      <h1>App</h1>
+      <h1>Users Admin</h1>
       <div className='container'>
         <ButtonBar
           toggleBgColor={toggleBgColor}
